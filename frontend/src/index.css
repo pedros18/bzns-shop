@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --theme-font: 'Tajawal', system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", sans-serif;
+}
+
+html, body, #root { height: 100%; }
+body { font-family: var(--theme-font); background:#ffffff; color:#111111; }
+
+/**************** RTL helpers ****************/
+.rtl { direction: rtl; }
+.ltr { direction: ltr; }
+
+/**************** Layout helpers ****************/
+.container { width: 100%; padding-left: 1rem; padding-right: 1rem; }
+@media (min-width: 768px) {
+  .container { padding-left: 1.5rem; padding-right: 1.5rem; }
+}
+
+/* Ensure no gray gutters at bottom or sides */
+main, header, footer, section, .page { background: #ffffff; }
+
+/* Footer simple theme */
+.footer-dark { background: #000000; color: #ffffff; }
+.footer-dark a { color: rgba(255,255,255,0.8); text-decoration: underline; }
+.footer-dark a:hover { opacity: 0.9; }
