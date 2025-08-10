@@ -12,19 +12,42 @@ export default function HomePage() {
 
   useEffect(() => {
     let ignore = false;
-    setLoading(true);
-    setError('');
-    getProducts(q)
-      .then((list) => { if (!ignore) setProducts(list); })
-      .catch((e) => { if (!ignore) setError(e.message || 'Erreur'); })
-      .finally(() => { if (!ignore) setLoading(false); });
-    return () => { ignore = true; };
+    
+    async function fetchProducts() {
+      try {
+        setLoading(true);
+        setError('');
+        console.log('Fetching products with query:', q);
+        
+        const list = await getProducts(q);
+        console.log('Products received:', list);
+        
+        if (!ignore) {
+          setProducts(Array.isArray(list) ? list : []);
+        }
+      } catch (e) {
+        console.error('Error fetching products:', e);
+        if (!ignore) {
+          setError(e.message || 'خطأ في تحميل المنتجات');
+        }
+      } finally {
+        if (!ignore) {
+          setLoading(false);
+        }
+      }
+    }
+
+    fetchProducts();
+    
+    return () => { 
+      ignore = true; 
+    };
   }, [q]);
 
   const title = useMemo(() => (q ? `منتجات مطابقة لـ "${q}"` : 'منتجاتنا الشتوية دافئة وذات جودة عالية.'), [q]);
 
   return (
-    <div className="space-y-10 bg-white text-black">
+    <div className="space-y-10 bg-white text-black min-h-screen p-4">
       {/* Hero heading */}
       <section className="text-center">
         <h1 className="text-2xl md:text-3xl font-extrabold mb-2">{title}</h1>
@@ -37,35 +60,51 @@ export default function HomePage() {
         <div className="mt-3 h-px bg-gray-300"></div>
       </section>
 
-      {/* Grid */}
+      {/* Loading State */}
       {loading && (
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
           {Array.from({ length: 8 }).map((_, i) => (
-            <div key={i} className="skeleton h-72" />
+            <div key={i} className="animate-pulse">
+              <div className="bg-gray-200 h-48 rounded-lg mb-4"></div>
+              <div className="bg-gray-200 h-4 rounded mb-2"></div>
+              <div className="bg-gray-200 h-4 rounded w-3/4"></div>
+            </div>
           ))}
         </div>
       )}
 
+      {/* Error State */}
       {error && (
-        <div className="alert alert-error">
-          <span>{error}</span>
+        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg">
+          <div className="flex items-center justify-between">
+            <span>{error}</span>
+            <button 
+              onClick={() => window.location.reload()} 
+              className="bg-red-500 text-white px-3 py-1 rounded text-sm hover:bg-red-600"
+            >
+              إعادة المحاولة
+            </button>
+          </div>
         </div>
       )}
 
+      {/* Products Grid */}
       {!loading && !error && (
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
           {products.map((p) => (
-            
             <ProductCard key={p.id} product={p} />
           ))}
           {products.length === 0 && (
-            <div className="col-span-full text-center opacity-70">لا توجد منتجات.</div>
+            <div className="col-span-full text-center py-12">
+              <div className="text-lg opacity-70">لا توجد منتجات.</div>
+              <div className="text-sm mt-2 opacity-50">تحقق من اتصال الإنترنت أو حاول مرة أخرى.</div>
+            </div>
           )}
         </div>
       )}
 
       {/* Category banners */}
-      {!q && (
+      {!q && !loading && (
         <section className="space-y-4">
           <h2 className="text-xl font-bold text-center">تسوق حسب الفئات</h2>
           <div className="grid grid-cols-1 gap-4">
@@ -74,7 +113,7 @@ export default function HomePage() {
               <div className="absolute inset-0 bg-black/30" />
               <div className="absolute inset-0 flex items-center justify-between px-6">
                 <div className="text-white font-extrabold text-xl">WINTER COLLECTION</div>
-                <Link to="#" className="btn bg-black text-white">تسوق الآن</Link>
+                <Link to="#" className="bg-black text-white px-4 py-2 rounded hover:bg-gray-800">تسوق الآن</Link>
               </div>
             </div>
             <div className="relative rounded-lg overflow-hidden">
@@ -82,7 +121,7 @@ export default function HomePage() {
               <div className="absolute inset-0 bg-black/30" />
               <div className="absolute inset-0 flex items-center justify-between px-6">
                 <div className="text-white font-extrabold text-xl">SUMMER COLLECTION</div>
-                <Link to="#" className="btn bg-black text-white">تسوق الآن</Link>
+                <Link to="#" className="bg-black text-white px-4 py-2 rounded hover:bg-gray-800">تسوق الآن</Link>
               </div>
             </div>
           </div>

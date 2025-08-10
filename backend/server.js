@@ -18,12 +18,15 @@ app.use(morgan('dev'));
 // Allow frontend dev server and production to call the API
 app.use(cors({
   origin: [
-    'http://localhost:5173', 
-    'http://127.0.0.1:5173',
-    'https://bzns-9yu3qcov6-pedros18s-projects.vercel.app',
-    'https://bzns-g0vtsaj8v-pedros18s-projects.vercel.app',
-    'https://bzns.vercel.app',
-    'https://*.vercel.app'
+    'http://localhost:5173',
+    'http://localhost:3000',
+    'https://bzns-shop.vercel.app',
+    'https://bzns-shop-pedros18s-projects.vercel.app',
+    'https://bzns-shop-git-main-pedros18s-projects.vercel.app',
+    /^https:\/\/bzns-shop.*\.vercel\.app$/,
+    /^https:\/\/.*--bzns-shop.*\.vercel\.app$/,
+    'https://bzns-shop-4eeeui5br-pedros18s-projects.vercel.app',
+    'https://bzns-shop.app.vercel.app'
   ],
   credentials: true,
 }));
