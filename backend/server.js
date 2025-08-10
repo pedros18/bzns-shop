@@ -7,27 +7,47 @@ import uploadRoutes from './routes/uploadRoutes.js';
 import orderRoutes from './routes/orderRoutes.js';
 import { db } from './config/db.js';
 import cors from 'cors';
+
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
 app.use(express.json());
 app.use(helmet());
 app.use(morgan('dev'));
 
 // Allow frontend dev server and production to call the API
 app.use(cors({
-  origin: [
-    'http://localhost:5173',
-    'http://localhost:3000',
-    'https://bzns-shop.vercel.app',
-    'https://bzns-shop-pedros18s-projects.vercel.app',
-    'https://bzns-shop-git-main-pedros18s-projects.vercel.app',
-    /^https:\/\/bzns-shop.*\.vercel\.app$/,
-    /^https:\/\/.*--bzns-shop.*\.vercel\.app$/,
-    'https://bzns-shop-4eeeui5br-pedros18s-projects.vercel.app',
-    'https://bzns-shop.app.vercel.app'
-  ],
+  origin: (origin, callback) => {
+    const allowedOrigins = [
+      'http://localhost:5173',
+      'http://localhost:3000',
+      'https://bzns-shop.vercel.app',
+      'https://bzns-shop-pedros18s-projects.vercel.app',
+      'https://bzns-shop-git-main-pedros18s-projects.vercel.app',
+      'https://bzns-shop-4eeeui5br-pedros18s-projects.vercel.app',
+      'https://beznes.vercel.app'
+    ];
+
+    // Allow exact matches or regex matches
+    const allowedRegex = [
+      /^https:\/\/bzns-shop.*\.vercel\.app$/,
+      /^https:\/\/.*--bzns-shop.*\.vercel\.app$/
+    ];
+
+    if (!origin) {
+      // Allow requests with no origin (like mobile apps or curl)
+      return callback(null, true);
+    }
+
+    if (allowedOrigins.includes(origin) || allowedRegex.some(rx => rx.test(origin))) {
+      return callback(null, true);
+    }
+
+    return callback(new Error('Not allowed by CORS'));
+  },
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true,
 }));
 
@@ -94,13 +114,15 @@ async function initDB() {
     console.error('Database connection failed:', error);
     process.exit(1);
   }
-  
 }
-initDB().then(() => {
+
+initDB()
+  .then(() => {
     app.listen(PORT, () => {
-        console.log(`Server is running on http://localhost:${PORT}`);
+      console.log(`Server is running on http://localhost:${PORT}`);
     });    
-}).catch((error) => {
+  })
+  .catch((error) => {
     console.error('Failed to start server:', error);
     process.exit(1);
-});
+  });
