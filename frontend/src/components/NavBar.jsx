@@ -79,7 +79,7 @@ function NavBar() {
           <div className="justify-self-center">
             <Link to="/" className="inline-flex items-center gap-2 text-black">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-7 h-7"><path d="M12 2a2 2 0 0 0-2 2 1 1 0 1 0 2 0 .5.5 0 0 1 1 0c0 .356-.19.682-.5.862L6 8v2l6-3.5L18 10V8l-4.5-2.7A2.5 2.5 0 0 0 13 4a2 2 0 0 0-2-2Z"/><path d="M3 12.75A2.75 2.75 0 0 1 5.75 10h12.5A2.75 2.75 0 0 1 21 12.75v.5a1.75 1.75 0 0 1-1.75 1.75H4.75A1.75 1.75 0 0 1 3 13.25v-.5Z"/></svg>
-              <span className="font-extrabold tracking-wide">Dripdrop.dz</span>
+              <span className="font-extrabold tracking-wide">BZNS-SHOP</span>
             </Link>
           </div>
 

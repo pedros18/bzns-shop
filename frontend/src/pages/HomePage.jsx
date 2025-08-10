@@ -108,23 +108,45 @@ export default function HomePage() {
         <section className="space-y-4">
           <h2 className="text-xl font-bold text-center">تسوق حسب الفئات</h2>
           <div className="grid grid-cols-1 gap-4">
-            <div className="relative rounded-lg overflow-hidden">
-              <img src="https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=1200&auto=format&fit=crop" alt="Winter" className="w-full h-48 object-cover" />
-              <div className="absolute inset-0 bg-black/30" />
-              <div className="absolute inset-0 flex items-center justify-between px-6">
-                <div className="text-white font-extrabold text-xl">WINTER COLLECTION</div>
-                <Link to="#" className="bg-black text-white px-4 py-2 rounded hover:bg-gray-800">تسوق الآن</Link>
-              </div>
-            </div>
-            <div className="relative rounded-lg overflow-hidden">
-              <img src="https://images.unsplash.com/photo-1532678465554-94846274c297?q=80&w=1200&auto=format&fit=crop" alt="Summer" className="w-full h-48 object-cover" />
-              <div className="absolute inset-0 bg-black/30" />
-              <div className="absolute inset-0 flex items-center justify-between px-6">
-                <div className="text-white font-extrabold text-xl">SUMMER COLLECTION</div>
-                <Link to="#" className="bg-black text-white px-4 py-2 rounded hover:bg-gray-800">تسوق الآن</Link>
-              </div>
-            </div>
-          </div>
+  {/* Winter Collection */}
+  <div className="relative rounded-lg overflow-hidden">
+    <img
+      src="https://images.unsplash.com/photo-1618354691373-d851c1b49c56?q=80&w=1200&auto=format&fit=crop"
+      alt="Winter Clothes"
+      className="w-full h-48 object-cover"
+    />
+    <div className="absolute inset-0 bg-black/30" />
+    <div className="absolute inset-0 flex items-center justify-between px-6">
+      <div className="text-white font-extrabold text-xl">WINTER COLLECTION</div>
+      <Link
+        to="#"
+        className="bg-black text-white px-4 py-2 rounded hover:bg-gray-800"
+      >
+        تسوق الآن
+      </Link>
+    </div>
+  </div>
+
+  {/* Summer Collection */}
+  <div className="relative rounded-lg overflow-hidden">
+    <img
+      src="https://images.unsplash.com/photo-1503341455253-b2e723bb3dbb?q=80&w=1200&auto=format&fit=crop"
+      alt="Summer Clothes"
+      className="w-full h-48 object-cover"
+    />
+    <div className="absolute inset-0 bg-black/30" />
+    <div className="absolute inset-0 flex items-center justify-between px-6">
+      <div className="text-white font-extrabold text-xl">SUMMER COLLECTION</div>
+      <Link
+        to="#"
+        className="bg-black text-white px-4 py-2 rounded hover:bg-gray-800"
+      >
+        تسوق الآن
+      </Link>
+    </div>
+  </div>
+</div>
+
         </section>
       )}
     </div>
